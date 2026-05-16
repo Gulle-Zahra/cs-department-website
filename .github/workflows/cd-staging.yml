@@ -19,7 +19,7 @@ jobs:
       - name: Checkout code
         uses: actions/checkout@v4
 
-      - name: Build Docker image (verify containerization works)
+      - name: Build Docker image
         run: |
           docker build -t cs-website:staging .
           echo "✅ Docker image built successfully"
@@ -28,24 +28,21 @@ jobs:
         run: |
           docker run -d -p 8080:80 --name staging-test cs-website:staging
           sleep 3
-          curl -f http://localhost:8080 && echo "✅ Container serving correctly"
+          curl -f http://localhost:8080 && echo "✅ Container is serving correctly"
           docker stop staging-test && docker rm staging-test
 
-      - name: Prepare deployment folder
+      - name: Prepare files for deployment
         run: |
           mkdir -p deploy-staging
           cp -r *.html css deploy-staging/
 
-      - name: Deploy to GitHub Pages (staging folder)
+      - name: Deploy to GitHub Pages — staging folder
         uses: peaceiris/actions-gh-pages@v3
         with:
           github_token: ${{ secrets.GITHUB_TOKEN }}
           publish_dir: ./deploy-staging
           destination_dir: staging
-          commit_message: "deploy: staging environment from ${{ github.sha }}"
+          commit_message: "deploy: staging from ${{ github.sha }}"
 
-      - name: Deployment summary
-        run: |
-          echo "🚀 Staging deployed!"
-          echo "URL: https://${{ github.repository_owner }}.github.io/${{ github.event.repository.name }}/staging"
-
+      - name: Print live URL
+        run: echo "🚀 Live at https://${{ github.repository_owner }}.github.io/${{ github.event.repository.name }}/staging"

@@ -10,7 +10,7 @@ jobs:
     runs-on: ubuntu-latest
     environment:
       name: production
-      url: https://${{ github.repository_owner }}.github.io/${{ github.event.repository.name }}
+      url: https://${{ github.repository_owner }}.github.io/${{ github.event.repository.name }}/production
 
     permissions:
       contents: write
@@ -19,7 +19,7 @@ jobs:
       - name: Checkout code
         uses: actions/checkout@v4
 
-      - name: Build Docker image (verify containerization works)
+      - name: Build Docker image
         run: |
           docker build -t cs-website:production .
           echo "✅ Docker image built successfully"
@@ -28,24 +28,21 @@ jobs:
         run: |
           docker run -d -p 8080:80 --name prod-test cs-website:production
           sleep 3
-          curl -f http://localhost:8080 && echo "✅ Container serving correctly"
+          curl -f http://localhost:8080 && echo "✅ Container is serving correctly"
           docker stop prod-test && docker rm prod-test
 
-      - name: Prepare deployment folder
+      - name: Prepare files for deployment
         run: |
           mkdir -p deploy-prod
           cp -r *.html css deploy-prod/
 
-      - name: Deploy to GitHub Pages (root = production)
+      - name: Deploy to GitHub Pages — production folder
         uses: peaceiris/actions-gh-pages@v3
         with:
           github_token: ${{ secrets.GITHUB_TOKEN }}
           publish_dir: ./deploy-prod
           destination_dir: production
-          commit_message: "deploy: production environment from ${{ github.sha }}"
+          commit_message: "deploy: production from ${{ github.sha }}"
 
-      - name: Deployment summary
-        run: |
-          echo "🚀 Production deployed!"
-          echo "URL: https://${{ github.repository_owner }}.github.io/${{ github.event.repository.name }}/production"
-
+      - name: Print live URL
+        run: echo "🚀 Live at https://${{ github.repository_owner }}.github.io/${{ github.event.repository.name }}/production"
