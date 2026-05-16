@@ -1,0 +1,25 @@
+name: CD — Deploy to Staging
+
+on:
+  push:
+    branches: [release]
+
+jobs:
+  deploy-staging:
+    name: Deploy to Staging/QA (Render)
+    runs-on: ubuntu-latest
+    environment: staging
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Trigger Render Deploy (Staging)
+        run: |
+          curl -X POST "${{ secrets.RENDER_DEPLOY_HOOK_STAGING }}" \
+            -H "Content-Type: application/json" \
+            --fail \
+            && echo "✅ Staging deploy triggered successfully"
+
+      - name: Confirm deployment
+        run: echo "🚀 Deployed to Staging/QA environment — ${{ vars.RENDER_STAGING_URL }}"

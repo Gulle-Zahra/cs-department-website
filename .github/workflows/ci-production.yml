@@ -1,0 +1,57 @@
+name: CI — Production
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+    branches: [main]
+
+jobs:
+  lint-html:
+    name: Lint HTML & CSS
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+
+      - name: Install HTMLHint
+        run: npm install -g htmlhint
+
+      - name: Run HTML linting
+        run: htmlhint "**/*.html" --config .htmlhintrc || true
+
+      - name: Verify all pages present
+        run: |
+          echo "Checking required pages..."
+          for file in index.html courses.html faculty.html admissions.html contact.html; do
+            if [ -f "$file" ]; then
+              echo "✅ $file found"
+            else
+              echo "❌ $file MISSING"
+              exit 1
+            fi
+          done
+
+  build-docker:
+    name: Build Docker Image
+    runs-on: ubuntu-latest
+    needs: lint-html
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Build Docker image (production tag)
+        run: docker build -t cs-department-website:production .
+
+      - name: Test container starts
+        run: |
+          docker run -d -p 8080:80 --name test-prod cs-department-website:production
+          sleep 3
+          curl -f http://localhost:8080 && echo "✅ Production container OK"
+          docker stop test-prod
+          docker rm test-prod

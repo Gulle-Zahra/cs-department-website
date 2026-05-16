@@ -1,0 +1,25 @@
+name: CD — Deploy to Development
+
+on:
+  push:
+    branches: [develop]
+
+jobs:
+  deploy-development:
+    name: Deploy to Development (Render)
+    runs-on: ubuntu-latest
+    environment: development
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Trigger Render Deploy (Development)
+        run: |
+          curl -X POST "${{ secrets.RENDER_DEPLOY_HOOK_DEV }}" \
+            -H "Content-Type: application/json" \
+            --fail \
+            && echo "✅ Development deploy triggered successfully"
+
+      - name: Confirm deployment
+        run: echo "🚀 Deployed to Development environment — ${{ vars.RENDER_DEV_URL }}"
