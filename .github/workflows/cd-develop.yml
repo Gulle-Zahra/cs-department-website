@@ -6,20 +6,46 @@ on:
 
 jobs:
   deploy-development:
-    name: Deploy to Development (Render)
+    name: Deploy to Development (GitHub Pages)
     runs-on: ubuntu-latest
-    environment: development
+    environment:
+      name: development
+      url: https://${{ github.repository_owner }}.github.io/${{ github.event.repository.name }}/dev
+
+    permissions:
+      contents: write
 
     steps:
       - name: Checkout code
         uses: actions/checkout@v4
 
-      - name: Trigger Render Deploy (Development)
+      - name: Build Docker image (verify containerization works)
         run: |
-          curl -X POST "${{ secrets.RENDER_DEPLOY_HOOK_DEV }}" \
-            -H "Content-Type: application/json" \
-            --fail \
-            && echo "✅ Development deploy triggered successfully"
+          docker build -t cs-website:dev .
+          echo "✅ Docker image built successfully"
 
-      - name: Confirm deployment
-        run: echo "🚀 Deployed to Development environment — ${{ vars.RENDER_DEV_URL }}"
+      - name: Test Docker container
+        run: |
+          docker run -d -p 8080:80 --name dev-test cs-website:dev
+          sleep 3
+          curl -f http://localhost:8080 && echo "✅ Container serving correctly"
+          docker stop dev-test && docker rm dev-test
+
+      - name: Prepare deployment folder
+        run: |
+          mkdir -p deploy-dev
+          cp -r *.html css deploy-dev/
+
+      - name: Deploy to GitHub Pages (dev folder)
+        uses: peaceiris/actions-gh-pages@v3
+        with:
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+          publish_dir: ./deploy-dev
+          destination_dir: dev
+          commit_message: "deploy: development environment from ${{ github.sha }}"
+
+      - name: Deployment summary
+        run: |
+          echo "🚀 Development deployed!"
+          echo "URL: https://${{ github.repository_owner }}.github.io/${{ github.event.repository.name }}/dev"
+
