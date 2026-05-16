@@ -1,0 +1,190 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Faculty — CS Department COMSATS Lahore</title>
+  <link rel="stylesheet" href="css/style.css"/>
+  <style>
+    .faculty-card {
+      background: var(--white);
+      border-radius: 12px;
+      padding: 28px;
+      border: 1px solid var(--border);
+      box-shadow: var(--shadow);
+      display: flex;
+      gap: 20px;
+      align-items: flex-start;
+      transition: transform 0.2s, box-shadow 0.2s;
+    }
+    .faculty-card:hover { transform: translateY(-2px); box-shadow: 0 8px 32px rgba(10,22,40,0.13); }
+    .faculty-avatar {
+      width: 64px; height: 64px;
+      border-radius: 50%;
+      background: var(--navy);
+      display: flex; align-items: center; justify-content: center;
+      font-family: 'Playfair Display', serif;
+      font-size: 1.4rem;
+      color: var(--gold);
+      flex-shrink: 0;
+    }
+    .faculty-info h3 { font-family: 'Playfair Display', serif; font-size: 1.05rem; font-weight: 700; color: var(--navy); margin-bottom: 4px; }
+    .faculty-role { font-size: 0.8rem; color: var(--gold); font-weight: 500; text-transform: uppercase; letter-spacing: 0.8px; margin-bottom: 6px; }
+    .faculty-detail { font-size: 0.85rem; color: var(--gray); line-height: 1.6; }
+    .faculty-detail span { font-weight: 500; color: var(--navy); }
+    .faculty-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(320px, 1fr)); gap: 20px; }
+  </style>
+</head>
+<body>
+
+<nav>
+  <a class="nav-logo" href="index.html">CS Dept</a>
+  <ul class="nav-links">
+    <li><a href="index.html">Home</a></li>
+    <li><a href="courses.html">Courses</a></li>
+    <li><a href="faculty.html" class="active">Faculty</a></li>
+    <li><a href="admissions.html">Admissions</a></li>
+    <li><a href="contact.html">Contact</a></li>
+  </ul>
+</nav>
+
+<section class="hero">
+  <p class="hero-label">Our Team</p>
+  <h1>Faculty &amp; Staff</h1>
+  <p>Meet our experienced, research-active faculty dedicated to academic excellence and student success.</p>
+</section>
+
+<!-- Faculty list -->
+<section class="section" style="background: var(--white);">
+  <h2 class="section-title">Academic Faculty</h2>
+  <div class="gold-line"></div>
+  <div class="faculty-grid">
+
+    <div class="faculty-card">
+      <div class="faculty-avatar">AK</div>
+      <div class="faculty-info">
+        <h3>Dr. Amjad Khan</h3>
+        <p class="faculty-role">Chairman &amp; Professor</p>
+        <p class="faculty-detail">
+          <span>Specialization:</span> Artificial Intelligence, Machine Learning<br/>
+          <span>Education:</span> PhD Computer Science, University of Birmingham, UK<br/>
+          <span>Office Hours:</span> Mon &amp; Wed, 10:00 AM – 12:00 PM<br/>
+          <span>Office:</span> Room 301, CS Block<br/>
+          <span>Email:</span> a.khan@cuiwlahore.edu.pk
+        </p>
+      </div>
+    </div>
+
+    <div class="faculty-card">
+      <div class="faculty-avatar">SR</div>
+      <div class="faculty-info">
+        <h3>Dr. Sadia Rehman</h3>
+        <p class="faculty-role">Associate Professor</p>
+        <p class="faculty-detail">
+          <span>Specialization:</span> Data Mining, Big Data Analytics<br/>
+          <span>Education:</span> PhD Information Technology, NUST Islamabad<br/>
+          <span>Office Hours:</span> Tue &amp; Thu, 2:00 PM – 4:00 PM<br/>
+          <span>Office:</span> Room 305, CS Block<br/>
+          <span>Email:</span> s.rehman@cuiwlahore.edu.pk
+        </p>
+      </div>
+    </div>
+
+    <div class="faculty-card">
+      <div class="faculty-avatar">MH</div>
+      <div class="faculty-info">
+        <h3>Mr. M. Khizar Hayat</h3>
+        <p class="faculty-role">Lecturer</p>
+        <p class="faculty-detail">
+          <span>Specialization:</span> DevOps, Cloud Computing, Software Engineering<br/>
+          <span>Education:</span> MS Computer Science, COMSATS University<br/>
+          <span>Office Hours:</span> Mon, Wed &amp; Fri, 1:00 PM – 2:00 PM<br/>
+          <span>Office:</span> Room 210, CS Block<br/>
+          <span>Email:</span> khizar.hayat@cuiwlahore.edu.pk
+        </p>
+      </div>
+    </div>
+
+    <div class="faculty-card">
+      <div class="faculty-avatar">FA</div>
+      <div class="faculty-info">
+        <h3>Dr. Farhan Ahmad</h3>
+        <p class="faculty-role">Assistant Professor</p>
+        <p class="faculty-detail">
+          <span>Specialization:</span> Cybersecurity, Network Security<br/>
+          <span>Education:</span> PhD Information Security, KTH Stockholm, Sweden<br/>
+          <span>Office Hours:</span> Wed &amp; Fri, 9:00 AM – 11:00 AM<br/>
+          <span>Office:</span> Room 308, CS Block<br/>
+          <span>Email:</span> f.ahmad@cuiwlahore.edu.pk
+        </p>
+      </div>
+    </div>
+
+    <div class="faculty-card">
+      <div class="faculty-avatar">NB</div>
+      <div class="faculty-info">
+        <h3>Ms. Nida Baig</h3>
+        <p class="faculty-role">Lecturer</p>
+        <p class="faculty-detail">
+          <span>Specialization:</span> Web Development, Human Computer Interaction<br/>
+          <span>Education:</span> MS Software Engineering, UET Lahore<br/>
+          <span>Office Hours:</span> Tue &amp; Thu, 10:00 AM – 12:00 PM<br/>
+          <span>Office:</span> Room 212, CS Block<br/>
+          <span>Email:</span> n.baig@cuiwlahore.edu.pk
+        </p>
+      </div>
+    </div>
+
+    <div class="faculty-card">
+      <div class="faculty-avatar">TM</div>
+      <div class="faculty-info">
+        <h3>Dr. Tariq Mahmood</h3>
+        <p class="faculty-role">Assistant Professor</p>
+        <p class="faculty-detail">
+          <span>Specialization:</span> Computer Vision, Deep Learning<br/>
+          <span>Education:</span> PhD Computer Engineering, TU Berlin, Germany<br/>
+          <span>Office Hours:</span> Mon &amp; Thu, 3:00 PM – 5:00 PM<br/>
+          <span>Office:</span> Room 310, CS Block<br/>
+          <span>Email:</span> t.mahmood@cuiwlahore.edu.pk
+        </p>
+      </div>
+    </div>
+
+    <div class="faculty-card">
+      <div class="faculty-avatar">ZA</div>
+      <div class="faculty-info">
+        <h3>Ms. Zainab Ali</h3>
+        <p class="faculty-role">Lab Engineer</p>
+        <p class="faculty-detail">
+          <span>Specialization:</span> Systems Administration, Lab Management<br/>
+          <span>Education:</span> BS Computer Science, COMSATS Lahore<br/>
+          <span>Office Hours:</span> Daily, 9:00 AM – 5:00 PM<br/>
+          <span>Office:</span> CS Lab, Ground Floor<br/>
+          <span>Email:</span> z.ali@cuiwlahore.edu.pk
+        </p>
+      </div>
+    </div>
+
+    <div class="faculty-card">
+      <div class="faculty-avatar">RI</div>
+      <div class="faculty-info">
+        <h3>Mr. Rehan Iqbal</h3>
+        <p class="faculty-role">Visiting Lecturer</p>
+        <p class="faculty-detail">
+          <span>Specialization:</span> Mobile Development, Flutter, React Native<br/>
+          <span>Education:</span> MS Computer Science, Virtual University<br/>
+          <span>Office Hours:</span> Fri, 2:00 PM – 5:00 PM<br/>
+          <span>Office:</span> Room 215, CS Block<br/>
+          <span>Email:</span> r.iqbal@cuiwlahore.edu.pk
+        </p>
+      </div>
+    </div>
+
+  </div>
+</section>
+
+<footer>
+  <p>&copy; 2024 Department of Computer Science — <span>COMSATS University Islamabad, Lahore Campus</span></p>
+</footer>
+</body>
+</html>
